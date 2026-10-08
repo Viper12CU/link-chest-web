@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -15,6 +17,15 @@
   --danger: #d9534f;
   --shadow: 0 18px 50px rgba(25, 35, 27, 0.08);
   --radius: 18px;
+}
+
+.dark {
+  --surface: #1b231d;
+  --surface-2: #252f27;
+  --text: #eef3ed;
+  --muted: #9aa69c;
+  --line: #2d3830;
+  --dark: #0c110e;
 }
 
 @theme inline {

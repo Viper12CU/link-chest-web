@@ -38,7 +38,7 @@ export function LoginForm() {
         type="submit"
         className="flex items-center justify-between p-[14px]!"
       >
-        Iniciar sesión <span>→</span>
+        Iniciar sesión
       </PrimaryButton>
     </form>
   );

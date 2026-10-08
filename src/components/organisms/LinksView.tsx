@@ -1,0 +1,36 @@
+"use client";
+
+import { CategoryChips } from "@/components/molecules/CategoryChips";
+import { SectionHeading } from "@/components/molecules/SectionHeading";
+import { ViewControls } from "@/components/molecules/ViewControls";
+import { LinkCard } from "@/components/organisms/LinkCard";
+import { useDashboard } from "@/components/templates/DashboardProvider";
+
+export function LinksView() {
+  const { links, filteredLinks, categories } = useDashboard();
+
+  return (
+    <section className="mx-auto max-w-[1500px] px-[34px] pb-[60px] pt-[35px] max-[820px]:px-[18px] max-[820px]:pb-[45px] max-[820px]:pt-7">
+      <SectionHeading
+        eyebrow="TU COLECCIÓN"
+        title="Mis enlaces"
+        subtitle={`${links.length} enlaces guardados`}
+        actions={<ViewControls />}
+      />
+      <CategoryChips />
+      {filteredLinks.length > 0 ? (
+        <div className="columns-[4_230px] gap-4 max-[1100px]:columns-[3_220px] max-[620px]:columns-1">
+          {filteredLinks.map((link) => (
+            <LinkCard key={link.id} link={link} categories={categories} />
+          ))}
+        </div>
+      ) : (
+        <div className="px-5 py-20 text-center text-muted">
+          <div className="text-[40px]">⌕</div>
+          <h3 className="mb-[5px] font-display text-text">No encontramos enlaces</h3>
+          <p>Prueba con otro término de búsqueda o categoría.</p>
+        </div>
+      )}
+    </section>
+  );
+}

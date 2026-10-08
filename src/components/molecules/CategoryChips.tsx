@@ -1,0 +1,26 @@
+"use client";
+
+import { Chip } from "@/components/atoms/Chip";
+import { useDashboard } from "@/components/templates/DashboardProvider";
+
+export function CategoryChips() {
+  const { categories, activeCategory, setActiveCategory, countByCategory } = useDashboard();
+
+  return (
+    <div className="flex gap-[7px] overflow-x-auto pb-5">
+      <Chip active={activeCategory === "all"} onClick={() => setActiveCategory("all")}>
+        Todos
+      </Chip>
+      {categories.map((c) => (
+        <Chip
+          key={c.id}
+          active={activeCategory === c.name}
+          onClick={() => setActiveCategory(c.name)}
+          title={`${countByCategory(c.name)} enlaces`}
+        >
+          {c.icon} {c.name}
+        </Chip>
+      ))}
+    </div>
+  );
+}

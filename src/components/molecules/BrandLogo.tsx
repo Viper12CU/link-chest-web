@@ -8,7 +8,7 @@ export function BrandLogo({ large = false }: { large?: boolean }) {
       }`}
     >
       <BrandMark />
-      <span className="text-[#1a1a1a]">
+      <span className="text-[#1a1a1a] dark:text-[#eef3ed]">
         link<span className="font-medium text-[#8e9890]">chest</span>
       </span>
     </div>
