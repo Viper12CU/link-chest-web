@@ -69,7 +69,7 @@ export function ProfileEditForm({
           Nombre y correo
         </h2>
         <p className="mb-[20px] mt-[6px] text-[13px] leading-[1.55] text-muted">
-          Así apareces en tu workspace y donde te enviamos resúmenes y avisos.
+          Así apareces en tu workspace y donde te enviamos avisos importantes.
         </p>
         <form onSubmit={onSaveProfile} noValidate className="grid gap-[15px]">
           <ProfileField
@@ -135,7 +135,7 @@ export function ProfileEditForm({
             error={errors.current}
             autoComplete="current-password"
           />
-          <div className="grid gap-[15px] sm:grid-cols-2">
+          <div className="grid items-start gap-[15px] sm:grid-cols-2">
             <PasswordRow
               id="profile-next"
               label="Nueva contraseña"

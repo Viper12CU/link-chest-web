@@ -1,11 +1,9 @@
 import { Eyebrow } from "@/components/atoms/Eyebrow";
-import { Icon } from "@/components/atoms/Icon";
 import { AvatarUploader } from "@/components/molecules/AvatarUploader";
 
 const STATS = [
   { value: "248", label: "Enlaces" },
   { value: "12", label: "Categorías" },
-  { value: "36", label: "Favoritos" },
 ];
 
 export function ProfileHeader({ name, email }: { name: string; email: string }) {
@@ -30,16 +28,12 @@ export function ProfileHeader({ name, email }: { name: string; email: string }) 
         <div className="flex flex-wrap items-start justify-between gap-5">
           <AvatarUploader name={name} email={email} />
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-dark px-3 py-[6px] text-[11px] font-bold uppercase tracking-[.08em] text-accent">
-              <Icon name="star-filled" className="text-[13px]" />
-              Plan Pro
-            </span>
             <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-surface-2 px-3 py-[6px] text-[11px] font-bold uppercase tracking-[.08em] text-muted">
               Desde 2024
             </span>
           </div>
         </div>
-        <dl className="mt-[22px] grid grid-cols-3 gap-3 max-[620px]:grid-cols-3 max-[620px]:gap-2">
+        <dl className="mt-[22px] grid grid-cols-2 gap-3 max-[620px]:grid-cols-2 max-[620px]:gap-2">
           {STATS.map((s) => (
             <div
               key={s.label}

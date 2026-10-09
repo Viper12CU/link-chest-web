@@ -8,7 +8,6 @@ import { notifySuccess } from "@/lib/toasts";
 
 const THEME_KEY = "link-chest:theme";
 const VIEW_KEY = "link-chest:default-view";
-const DIGEST_KEY = "link-chest:weekly-digest";
 
 function readStorage(key: string): string | null {
   try {
@@ -31,7 +30,6 @@ export function ProfilePreferences() {
   // Los valores persistidos se restauran tras el montaje para no romper la hidratación.
   const [dark, setDark] = useState(false);
   const [compact, setCompact] = useState(false);
-  const [digest, setDigest] = useState(true);
   const [defaultView, setDefaultView] = useState<"grid" | "list">("grid");
 
   // Sincroniza con localStorage tras la hidratación (render inicial SSR-seguro).
@@ -41,7 +39,6 @@ export function ProfilePreferences() {
       document.documentElement.classList.contains("dark") || readStorage(THEME_KEY) === "dark"
     );
     setCompact(readStorage("link-chest:density") === "compact");
-    setDigest(readStorage(DIGEST_KEY) !== "off");
     const view = readStorage(VIEW_KEY);
     if (view === "list") setDefaultView("list");
   }, []);
@@ -80,15 +77,6 @@ export function ProfilePreferences() {
           onChange={(v) => {
             setCompact(v);
             writeStorage("link-chest:density", v ? "compact" : "comfortable");
-          }}
-        />
-        <SettingToggle
-          label="Resumen semanal"
-          description="Un correo con tus mejores hallazgos"
-          checked={digest}
-          onChange={(v) => {
-            setDigest(v);
-            writeStorage(DIGEST_KEY, v ? "on" : "off");
           }}
         />
         <div
