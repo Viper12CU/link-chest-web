@@ -23,8 +23,11 @@ export function CategoriesView() {
           return (
             <article key={c.id} className="rounded-[18px] border border-line bg-white p-[19px] dark:bg-surface">
               <div className="flex justify-between">
-                <div className="grid h-[42px] w-[42px] place-items-center rounded-xl bg-surface-2 text-[20px] text-text">
-                  {c.icon}
+                <div
+                  className="grid h-[42px] w-[42px] place-items-center rounded-xl text-[20px] text-text"
+                  style={{ backgroundColor: `${c.color}26` }}
+                >
+                  {c.emoji}
                 </div>
                 <div className="flex gap-[2px]">
                   <IconButton

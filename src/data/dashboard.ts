@@ -1,7 +1,8 @@
 export type Category = {
   id: number;
   name: string;
-  icon: string;
+  color: string;
+  emoji: string;
 };
 
 export type LinkItem = {
@@ -27,11 +28,11 @@ export const ACTIVITY_BARS = [35, 58, 43, 78, 66, 91, 74];
 export const WEEK_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
 export const CATEGORIES_INITIAL: Category[] = [
-  { id: 1, name: "Desarrollo", icon: "⌘" },
-  { id: 2, name: "Diseño", icon: "✦" },
-  { id: 3, name: "Productividad", icon: "◒" },
-  { id: 4, name: "Recursos", icon: "◈" },
-  { id: 5, name: "Inspiración", icon: "♡" },
+  { id: 1, name: "Desarrollo", color: "#5b9dff", emoji: "💻" },
+  { id: 2, name: "Diseño", color: "#c084fc", emoji: "🎨" },
+  { id: 3, name: "Productividad", color: "#f5b942", emoji: "⚡" },
+  { id: 4, name: "Recursos", color: "#5fc98a", emoji: "📦" },
+  { id: 5, name: "Inspiración", color: "#f27e8a", emoji: "💡" },
 ];
 
 export const LINKS_INITIAL: LinkItem[] = [

@@ -10,7 +10,7 @@ import { useDashboard } from "@/components/templates/DashboardProvider";
 import type { Category, LinkItem } from "@/data/dashboard";
 
 const inputClass =
-  "w-full rounded-[11px] border border-line bg-[#fbfcfa] px-[13px] py-3 text-text outline-none transition-all duration-200 focus:border-[#a8c88a] focus:shadow-[0_0_0_3px_rgba(185,239,114,.2)]";
+  "w-full rounded-[11px] border border-line bg-[#fbfcfa] px-[13px] py-3 text-text outline-none transition-all duration-200 focus:border-[#a8c88a] focus:shadow-[0_0_0_3px_rgba(185,239,114,.2)] dark:bg-[#1b231d]";
 
 function LinkModalForm({
   editing,
@@ -59,7 +59,7 @@ function LinkModalForm({
           <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputClass}>
             {categories.map((c) => (
               <option key={c.id} value={c.name}>
-                {c.icon} {c.name}
+                {c.emoji} {c.name}
               </option>
             ))}
           </select>

@@ -25,28 +25,28 @@ export function LinkCardMenu({ linkId, favorite }: { linkId: number; favorite: b
           <button
             type="button"
             onClick={() => copyLink(linkId)}
-            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text dark:text-[#c6cec6]"
+            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text"
           >
             ⧉ &nbsp; Copiar enlace
           </button>
           <button
             type="button"
             onClick={() => openEditLink(linkId)}
-            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text dark:text-[#c6cec6]"
+            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text"
           >
             ✎ &nbsp; Editar enlace
           </button>
           <button
             type="button"
             onClick={() => promptChangeCategory(linkId)}
-            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text dark:text-[#c6cec6]"
+            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text"
           >
             ◈ &nbsp; Cambiar categoría
           </button>
           <button
             type="button"
             onClick={() => toggleFavorite(linkId)}
-            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text dark:text-[#c6cec6]"
+            className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text"
           >
             {favorite ? "☆" : "★"} &nbsp; {favorite ? "Quitar favorito" : "Añadir favorito"}
           </button>

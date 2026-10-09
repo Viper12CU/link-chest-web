@@ -33,12 +33,12 @@ export function StatsView() {
               <strong className="font-display text-[15px] text-text">Actividad</strong>
               <p className="mt-1 text-[11px] text-muted">Enlaces guardados por día</p>
             </div>
-            <span className="rounded-md bg-[#eef8e5] px-2 py-[5px] text-[10px] font-bold text-[#6fa92e] dark:bg-[#252f27]">
+            <span className="rounded-md bg-[#eef8e5] px-2 py-[5px] text-[10px] font-bold text-[#6fa92e]">
               +18%
             </span>
           </div>
           <div className="relative flex h-[210px] items-end gap-[12%] overflow-hidden border-b border-line px-[10px] pt-[15px]">
-            <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,transparent_0,transparent_50px,#edf0ec_51px)] opacity-80 dark:opacity-20" />
+            <div className="absolute inset-0 bg-[repeating-linear-gradient(to_bottom,transparent_0,transparent_50px,#edf0ec_51px)] opacity-80" />
             <div className="relative z-[1] flex h-full w-full items-end justify-around">
               {ACTIVITY_BARS.map((v, i) => (
                 <i
@@ -68,8 +68,9 @@ export function StatsView() {
               return (
                 <CategoryProgressRow
                   key={c.id}
-                  icon={c.icon}
+                  icon={c.emoji}
                   name={c.name}
+                  color={c.color}
                   percent={Math.round((n / total) * 100)}
                 />
               );

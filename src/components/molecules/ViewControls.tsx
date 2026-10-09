@@ -14,7 +14,7 @@ export function ViewControls() {
   const { activeFilter, setActiveFilter } = useDashboard();
 
   return (
-    <div className="flex gap-[5px] rounded-[10px] bg-[#e9eee7] p-1 dark:bg-[#252f27] max-[620px]:w-full">
+    <div className="flex gap-[5px] rounded-[10px] bg-[#e9eee7] p-1 max-[620px]:w-full">
       {OPTIONS.map((o) => (
         <FilterButton
           key={o.value}

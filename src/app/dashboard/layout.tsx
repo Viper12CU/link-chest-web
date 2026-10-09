@@ -6,6 +6,16 @@ export const metadata: Metadata = {
   description: "Gestiona tu colección de enlaces desde tu panel de control.",
 };
 
+const THEME_STORAGE_KEY = "link-chest:theme";
+
+// Aplica el tema guardado antes de la hidratación para evitar parpadeo.
+const themeScript = `(function(){try{if(localStorage.getItem("${THEME_STORAGE_KEY}")==="dark"){document.documentElement.classList.add("dark")}}catch(e){}})();`;
+
 export default function DashboardLayout({ children }: LayoutProps<"/dashboard">) {
-  return <DashboardTemplate>{children}</DashboardTemplate>;
+  return (
+    <>
+      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      <DashboardTemplate>{children}</DashboardTemplate>
+    </>
+  );
 }

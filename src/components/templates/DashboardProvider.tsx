@@ -28,6 +28,14 @@ export type LinkPayload = {
   category: string;
 };
 
+export type CategoryPayload = {
+  name: string;
+  color: string;
+  emoji: string;
+};
+
+const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
+
 type DashboardContextValue = {
   categories: Category[];
   links: LinkItem[];
@@ -59,7 +67,7 @@ type DashboardContextValue = {
   openNewCategory: () => void;
   openEditCategory: (id: number) => void;
   closeCategoryModal: () => void;
-  saveCategory: (name: string, icon: string, editingId: number | null) => void;
+  saveCategory: (payload: CategoryPayload, editingId: number | null) => void;
   requestDeleteCategory: (id: number) => void;
   openCategoryLinks: (name: string) => void;
   closeAllOverlays: () => void;
@@ -69,6 +77,17 @@ type DashboardContextValue = {
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
+const THEME_STORAGE_KEY = "link-chest:theme";
+
+function readStoredTheme(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    return window.localStorage.getItem(THEME_STORAGE_KEY) === "dark";
+  } catch {
+    return false;
+  }
+}
+
 export function DashboardProvider({ children }: { children: ReactNode }) {
   const [categories, setCategories] = useState<Category[]>(CATEGORIES_INITIAL);
   const [links, setLinks] = useState<LinkItem[]>(LINKS_INITIAL);
@@ -76,7 +95,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [activeFilter, setActiveFilter] = useState<LinkFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState<boolean>(readStoredTheme);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const [linkModal, setLinkModal] = useState<{ open: boolean; editingId: number | null }>({
     open: false,
@@ -91,6 +110,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
+    try {
+      window.localStorage.setItem(THEME_STORAGE_KEY, dark ? "dark" : "light");
+    } catch {
+      // Almacenamiento no disponible: se mantiene el tema en memoria.
+    }
+    return () => {
+      document.documentElement.classList.remove("dark");
+    };
   }, [dark]);
 
   useEffect(() => {
@@ -212,14 +239,18 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const saveCategory = useCallback(
-    (name: string, icon: string, editingId: number | null) => {
-      const trimmed = name.trim();
+    (payload: CategoryPayload, editingId: number | null) => {
+      const trimmed = payload.name.trim();
       if (!trimmed) return;
+      const color = HEX_COLOR.test(payload.color) ? payload.color : "#8a948a";
+      const emoji = payload.emoji.trim() || "📁";
       if (editingId !== null) {
         const cat = categories.find((c) => c.id === editingId);
         if (!cat) return;
         const oldName = cat.name;
-        setCategories((prev) => prev.map((c) => (c.id === editingId ? { ...c, name: trimmed, icon } : c)));
+        setCategories((prev) =>
+          prev.map((c) => (c.id === editingId ? { ...c, name: trimmed, color, emoji } : c))
+        );
         setLinks((prev) => prev.map((l) => (l.category === oldName ? { ...l, category: trimmed } : l)));
         showToast("Categoría actualizada");
       } else {
@@ -227,7 +258,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           showToast("Esa categoría ya existe");
           return;
         }
-        setCategories((prev) => [...prev, { id: Date.now(), name: trimmed, icon }]);
+        setCategories((prev) => [...prev, { id: Date.now(), name: trimmed, color, emoji }]);
         showToast("Categoría creada");
       }
       setCategoryModal({ open: false, editingId: null });

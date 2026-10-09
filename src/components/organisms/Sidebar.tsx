@@ -70,7 +70,7 @@ export function Sidebar({ open, onClose }: SidebarProps) {
           {categories.map((category) => (
             <CategoryListItem
               key={category.id}
-              icon={category.icon}
+              icon={category.emoji}
               name={category.name}
               count={countByCategory(category.name)}
               onClick={() => {

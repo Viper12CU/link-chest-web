@@ -18,7 +18,7 @@ export function CategoryChips() {
           onClick={() => setActiveCategory(c.name)}
           title={`${countByCategory(c.name)} enlaces`}
         >
-          {c.icon} {c.name}
+          {c.emoji} {c.name}
         </Chip>
       ))}
     </div>

@@ -2,10 +2,12 @@ export function CategoryProgressRow({
   icon,
   name,
   percent,
+  color,
 }: {
   icon: string;
   name: string;
   percent: number;
+  color: string;
 }) {
   return (
     <div className="mb-4">
@@ -15,8 +17,8 @@ export function CategoryProgressRow({
         </span>
         <strong>{percent}%</strong>
       </div>
-      <div className="h-[7px] overflow-hidden rounded-full bg-[#edf1eb] dark:bg-[#252f27]">
-        <i className="block h-full rounded-full bg-accent-strong" style={{ width: `${Math.max(percent, 3)}%` }} />
+      <div className="h-[7px] overflow-hidden rounded-full bg-[#edf1eb]">
+        <i className="block h-full rounded-full" style={{ width: `${Math.max(percent, 3)}%`, backgroundColor: color }} />
       </div>
     </div>
   );
