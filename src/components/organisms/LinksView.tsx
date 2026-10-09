@@ -1,8 +1,7 @@
 "use client";
 
-import { CategoryChips } from "@/components/molecules/CategoryChips";
+import { Icon } from "@/components/atoms/Icon";
 import { SectionHeading } from "@/components/molecules/SectionHeading";
-import { ViewControls } from "@/components/molecules/ViewControls";
 import { LinkCard } from "@/components/organisms/LinkCard";
 import { useDashboard } from "@/components/templates/DashboardProvider";
 
@@ -15,9 +14,7 @@ export function LinksView() {
         eyebrow="TU COLECCIÓN"
         title="Mis enlaces"
         subtitle={`${links.length} enlaces guardados`}
-        actions={<ViewControls />}
       />
-      <CategoryChips />
       {filteredLinks.length > 0 ? (
         <div className="columns-[4_230px] gap-4 max-[1100px]:columns-[3_220px] max-[620px]:columns-1">
           {filteredLinks.map((link) => (
@@ -26,7 +23,9 @@ export function LinksView() {
         </div>
       ) : (
         <div className="px-5 py-20 text-center text-muted">
-          <div className="text-[40px]">⌕</div>
+          <div className="grid place-items-center text-[40px] text-muted">
+            <Icon name="search" />
+          </div>
           <h3 className="mb-[5px] font-display text-text">No encontramos enlaces</h3>
           <p>Prueba con otro término de búsqueda o categoría.</p>
         </div>

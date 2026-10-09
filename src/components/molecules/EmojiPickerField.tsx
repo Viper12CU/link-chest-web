@@ -4,6 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import type { EmojiClickData } from "emoji-picker-react";
 import { Theme } from "emoji-picker-react";
+import { Icon } from "@/components/atoms/Icon";
 import { useDashboard } from "@/components/templates/DashboardProvider";
 
 const EmojiPicker = dynamic(() => import("emoji-picker-react"), { ssr: false });
@@ -37,8 +38,8 @@ export function EmojiPickerField({
           {value || "📁"}
         </span>
         <span className="text-[13px] font-medium">{value ? "Cambiar emoji" : "Elegir emoji"}</span>
-        <span aria-hidden className="ml-auto text-[11px] text-muted">
-          {open ? "▴" : "▾"}
+        <span aria-hidden className="ml-auto grid place-items-center text-[13px] text-muted">
+          <Icon name="chevron-down" className={`transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
         </span>
       </button>
       {open && (

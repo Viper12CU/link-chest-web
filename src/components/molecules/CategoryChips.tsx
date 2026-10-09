@@ -8,9 +8,6 @@ export function CategoryChips() {
 
   return (
     <div className="flex gap-[7px] overflow-x-auto pb-5">
-      <Chip active={activeCategory === "all"} onClick={() => setActiveCategory("all")}>
-        Todos
-      </Chip>
       {categories.map((c) => (
         <Chip
           key={c.id}

@@ -1,9 +1,11 @@
 "use client";
 
+import { Icon } from "@/components/atoms/Icon";
 import { IconButton } from "@/components/atoms/IconButton";
 import { PrimaryButton } from "@/components/atoms/PrimaryButton";
 import { SectionHeading } from "@/components/molecules/SectionHeading";
 import { useDashboard } from "@/components/templates/DashboardProvider";
+import { DEFAULT_CATEGORY_ID } from "@/data/dashboard";
 
 export function CategoriesView() {
   const { categories, countByCategory, openNewCategory, openEditCategory, requestDeleteCategory, openCategoryLinks } =
@@ -15,7 +17,12 @@ export function CategoriesView() {
         eyebrow="ORGANIZACIÓN"
         title="Categorías"
         subtitle="Organiza tus enlaces a tu manera."
-        actions={<PrimaryButton onClick={openNewCategory}>+ Nueva categoría</PrimaryButton>}
+        actions={
+          <PrimaryButton onClick={openNewCategory}>
+            <Icon name="plus" className="mr-1 inline-block align-[-2px] text-[13px]" />
+            Nueva categoría
+          </PrimaryButton>
+        }
       />
       <div className="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-[14px]">
         {categories.map((c) => {
@@ -30,22 +37,26 @@ export function CategoriesView() {
                   {c.emoji}
                 </div>
                 <div className="flex gap-[2px]">
-                  <IconButton
-                    type="button"
-                    aria-label={`Editar ${c.name}`}
-                    onClick={() => openEditCategory(c.id)}
-                    className="text-[#788279]"
-                  >
-                    ✎
-                  </IconButton>
-                  <IconButton
-                    type="button"
-                    aria-label={`Eliminar ${c.name}`}
-                    onClick={() => requestDeleteCategory(c.id)}
-                    className="text-[#c36b67]"
-                  >
-                    ⌫
-                  </IconButton>
+                  {c.id !== DEFAULT_CATEGORY_ID && (
+                    <>
+                      <IconButton
+                        type="button"
+                        aria-label={`Editar ${c.name}`}
+                        onClick={() => openEditCategory(c.id)}
+                        className="text-[#788279]"
+                      >
+                        <Icon name="edit" />
+                      </IconButton>
+                      <IconButton
+                        type="button"
+                        aria-label={`Eliminar ${c.name}`}
+                        onClick={() => requestDeleteCategory(c.id)}
+                        className="text-[#c36b67]"
+                      >
+                        <Icon name="trash" />
+                      </IconButton>
+                    </>
+                  )}
                 </div>
               </div>
               <h3 className="mb-1 mt-[18px] font-display text-[15px] text-text">{c.name}</h3>
@@ -57,7 +68,8 @@ export function CategoriesView() {
                 onClick={() => openCategoryLinks(c.name)}
                 className="cursor-pointer rounded-[7px] bg-transparent px-[10px] py-[7px] text-[11px] font-bold text-[#7d877e] transition-colors hover:bg-surface-2 hover:text-text"
               >
-                Ver enlaces →
+                Ver enlaces{" "}
+                <Icon name="arrow-right" className="inline-block align-[-2px] text-[12px]" />
               </button>
             </article>
           );

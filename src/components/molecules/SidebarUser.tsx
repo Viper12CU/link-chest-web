@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Icon } from "@/components/atoms/Icon";
 import { IconButton } from "@/components/atoms/IconButton";
 
 export function SidebarUser() {
@@ -16,7 +17,7 @@ export function SidebarUser() {
         <span className="mt-0.5 text-[9px] text-[#9ba39b]">Cuenta personal</span>
       </div>
       <IconButton type="button" title="Cerrar sesión" onClick={() => router.push("/login")}>
-        ↪
+        <Icon name="logout" />
       </IconButton>
     </div>
   );

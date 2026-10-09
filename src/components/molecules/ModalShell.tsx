@@ -1,4 +1,5 @@
 import { Eyebrow } from "@/components/atoms/Eyebrow";
+import { Icon } from "@/components/atoms/Icon";
 import { IconButton } from "@/components/atoms/IconButton";
 
 export function ModalShell({
@@ -30,7 +31,7 @@ export function ModalShell({
             <h3 className="font-display text-[21px] text-text">{title}</h3>
           </div>
           <IconButton type="button" aria-label="Cerrar" onClick={onClose}>
-            ×
+            <Icon name="close" />
           </IconButton>
         </div>
         {children}

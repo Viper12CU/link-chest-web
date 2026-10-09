@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { LoginPage } from "@/components/pages/LoginPage";
 
 export const metadata: Metadata = {
-  title: "Iniciar sesión — Link Chest",
+  title: "Iniciar sesión o crear cuenta — Link Chest",
   description: "Accede a tu colección de enlaces desde cualquier dispositivo.",
 };
 

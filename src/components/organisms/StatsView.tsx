@@ -1,6 +1,7 @@
 "use client";
 
 import { FilterButton } from "@/components/atoms/FilterButton";
+import { Icon } from "@/components/atoms/Icon";
 import { CategoryProgressRow } from "@/components/molecules/CategoryProgressRow";
 import { SectionHeading } from "@/components/molecules/SectionHeading";
 import { StatCard } from "@/components/molecules/StatCard";
@@ -18,13 +19,18 @@ export function StatsView() {
         eyebrow="RESUMEN"
         title="Estadísticas"
         subtitle="Una vista rápida de tu colección."
-        actions={<FilterButton>Últimos 30 días⌄</FilterButton>}
+        actions={
+          <FilterButton>
+            Últimos 30 días{" "}
+            <Icon name="chevron-down" className="inline-block align-[-2px] text-[12px]" />
+          </FilterButton>
+        }
       />
       <div className="mb-[18px] grid grid-cols-4 gap-[14px] max-[1100px]:grid-cols-2 max-[400px]:grid-cols-1">
-        <StatCard icon="▦" value={links.length} label="Enlaces guardados" />
-        <StatCard icon="♡" value={favorites} label="Favoritos" />
-        <StatCard icon="◈" value={categories.length} label="Categorías" />
-        <StatCard icon="↗" value={87} label="Aperturas este mes" trend="+18%" />
+        <StatCard icon="grid" value={links.length} label="Enlaces guardados" />
+        <StatCard icon="heart" value={favorites} label="Favoritos" />
+        <StatCard icon="category" value={categories.length} label="Categorías" />
+        <StatCard icon="trend" value={87} label="Aperturas este mes" trend="+18%" />
       </div>
       <div className="grid grid-cols-[1.5fr_1fr] gap-[18px] max-[820px]:grid-cols-1">
         <div className="rounded-[18px] border border-line bg-surface p-[21px]">

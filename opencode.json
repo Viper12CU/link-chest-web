@@ -1,0 +1,17 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "icons0": {
+      "type": "remote",
+      "url": "https://icons0.dev/mcp",
+      "headers": {
+        "Authorization": "Bearer i0_74ac8b0e367e_Q31Ugt56GV_5UBqa-9nEDYYLe5-j-aCH"
+      }
+    },
+    "chrome-devtools": {
+      "type": "local",
+      "command": ["npx", "-y", "chrome-devtools-mcp@latest"],
+      "enabled": true
+    }
+  }
+}

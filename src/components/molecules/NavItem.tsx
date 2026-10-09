@@ -1,7 +1,8 @@
 import type { ButtonHTMLAttributes } from "react";
+import { Icon, type IconName } from "@/components/atoms/Icon";
 
 type NavItemProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  icon: string;
+  icon: IconName;
   label: string;
   active?: boolean;
 };
@@ -16,7 +17,9 @@ export function NavItem({ icon, label, active = false, className = "", ...props 
           : "text-[#697269] hover:bg-surface-2 hover:text-text"
       } ${className}`}
     >
-      <span className="w-5 text-center text-[17px]">{icon}</span>
+      <span className="grid w-5 place-items-center text-[17px]">
+        <Icon name={icon} />
+      </span>
       {label}
     </button>
   );

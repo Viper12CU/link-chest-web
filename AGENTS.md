@@ -35,3 +35,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - `link-chest-prototype-single.html` (raíz del repo): prototipo HTML/CSS/JS completo. Al recrear pantallas, extraer solo el CSS/HTML relevante de su sección y copiar valores literalmente (colores, spacing, tipografía, breakpoints). El login está implementado en `/login` siguiendo este flujo.
 - Comportamiento demo del login: credenciales precargadas (`demo@linkchest.app` / `12345678`), submit → `router.push("/dashboard")`, toggle de visibilidad de contraseña. El login es solo claro (el prototipo no define dark mode ahí).
+
+## Iconos (Reicon, obligatorio)
+
+- Todos los iconos **UI** salen de `src/components/atoms/Icon.tsx` (`export function Icon({ name }: { name: IconName })`). Prohibido usar caracteres-símbolo (`☰ × + ☼ ⌕ ✎ ⌫ ★ ↗ •••`…), emojis o SVGs inline fuera de `Icon.tsx` para UI.
+- Colección: **Reicon** (licencia MIT) vía MCP `icons0` (config en `opencode.json`): `search-icons` con `collection: "reicon"` para hallar el id, `get-icon` en formato `react` para copiar el path literalmente (`currentColor`, `viewBox="0 0 24"`). Estilo: **outline** por defecto, variante `-filled` solo para estados (favorito, activo).
+- `Icon` hereda tamaño/color del padre (`1em`, `currentColor`, `aria-hidden`); no fijar `width/height` donde se usa.
+- Excepción: los **emojis de categorías** (`Category.emoji`, `CATEGORIES_INITIAL`, `EmojiPickerField`, `emoji-picker-react`) no se tocan y no usan `Icon`. `NavItem` y `StatCard` reciben `icon: IconName`; `CategoryListItem` y `CategoryProgressRow` siguen recibiendo `icon: string` (emoji).
+- Excepción documentada en `Icon.tsx`: `more` (tres puntos) es fallback local estilo Reicon porque la colección no trae ellipsis.
+- Al añadir un icono: 1) buscar id en Reicon, 2) añadirlo a `IconName` + mapa `ICONS` en `Icon.tsx`, 3) usar `<Icon name="..." />`.

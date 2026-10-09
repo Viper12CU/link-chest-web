@@ -19,7 +19,11 @@ export type DashboardView = "links" | "stats" | "categories";
 
 export type LinkFilter = "all" | "recent" | "favorites";
 
-export const UNCATEGORIZED = "Sin categoría";
+export const DEFAULT_CATEGORY: Category = { id: 0, name: "General", color: "#8a948a", emoji: "📁" };
+
+export const DEFAULT_CATEGORY_ID = 0;
+
+export const UNCATEGORIZED = DEFAULT_CATEGORY.name;
 
 export const RECENT_DATES = ["Hoy", "Ayer"];
 
@@ -28,6 +32,7 @@ export const ACTIVITY_BARS = [35, 58, 43, 78, 66, 91, 74];
 export const WEEK_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 
 export const CATEGORIES_INITIAL: Category[] = [
+  DEFAULT_CATEGORY,
   { id: 1, name: "Desarrollo", color: "#5b9dff", emoji: "💻" },
   { id: 2, name: "Diseño", color: "#c084fc", emoji: "🎨" },
   { id: 3, name: "Productividad", color: "#f5b942", emoji: "⚡" },

@@ -30,7 +30,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   }, [closeAllOverlays, focusSearch, setOpenMenuId]);
 
   return (
-    <div className="flex min-h-screen bg-[#f5f7f2] text-text dark:bg-[#121813]">
+    <div className="flex min-h-screen bg-[#f5f7f2] text-text transition-colors duration-200 dark:bg-[#121813]">
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="min-w-0 flex-1">
         <Topbar onOpenSidebar={() => setSidebarOpen(true)} />

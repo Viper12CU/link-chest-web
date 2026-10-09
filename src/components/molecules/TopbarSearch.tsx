@@ -1,5 +1,6 @@
 "use client";
 
+import { Icon } from "@/components/atoms/Icon";
 import { useDashboard } from "@/components/templates/DashboardProvider";
 
 export function TopbarSearch() {
@@ -7,7 +8,9 @@ export function TopbarSearch() {
 
   return (
     <div className="flex w-[min(480px,55%)] items-center gap-2.5 text-[#9ba39b] max-[820px]:w-auto max-[820px]:flex-1">
-      <span aria-hidden="true">⌕</span>
+      <span aria-hidden="true" className="grid shrink-0 place-items-center text-[16px]">
+        <Icon name="search" />
+      </span>
       <input
         id="searchInput"
         type="search"
