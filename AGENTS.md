@@ -20,6 +20,23 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `src/components/` — Atomic Design: `atoms/`, `molecules/`, `organisms/`, `templates/`, `pages/`. Un componente por archivo, PascalCase, export nombrado (`export function X()`).
 - Regla de composición: `app/route/page.tsx` → `components/pages/*` → `templates/*` → `organisms/*` → `molecules/*` → `atoms/*`.
 
+## Verificación tras implementar (obligatorio)
+
+- Tras cada implementación, comprobar la consola del navegador con MCP `chrome-devtools` en busca de errores antes de dar la tarea por terminada:
+  1) `list_pages` para localizar la página (`pnpm dev` debe estar corriendo).
+  2) `navigate_page` a cada ruta afectada (`/`, `/login`, `/dashboard`, `/profile`) y `list_console_messages` filtrando `types: ["error"]` (incluir `includePreservedMessages: true` si hubo navegación/redirect).
+  3) Si hay errores, obtener el detalle con `get_console_message` (msgid) y corregir la causa raíz en el código.
+- Cerrar el ciclo con `pnpm lint` + `npx tsc --noEmit` + `pnpm build` sin errores.
+
+## Hidratación SSR (regla aprendida)
+
+- Prohibido leer `localStorage` / `window` / `document` en el inicializador de `useState` (causa `Hydration failed...` cuando el valor persistido difiere del SSR). Patrón obligatorio:
+  - Estado inicial con valor determinista idéntico en servidor y cliente.
+  - Restaurar el valor persistido en un `useEffect` tras el montaje (una sola vez).
+  - Retrasar las escrituras a `localStorage` / `document.classList` hasta después de hidratar (flag `hydrated`).
+  - El `useEffect` de sincronización con `localStorage` requiere `/* eslint-disable react-hooks/set-state-in-effect -- hidratación SSR-segura, una sola vez */` (es el caso de uso sancionado: sincronizar con un sistema externo).
+- Afectados históricamente: `DashboardProvider` (`activeCategory`, `dark`), `InstallAppBanner` (`dismissed`), `ProfilePreferences` (`dark`, `compact`, `digest`, `defaultView`).
+
 ## Límites cliente/servidor
 
 - Server component por defecto. `"use client"` solo en componentes con estado/efectos/handlers (hoy: `PasswordField`, `RememberForgotRow`, `LoginForm`). No envolver el árbol completo en client.

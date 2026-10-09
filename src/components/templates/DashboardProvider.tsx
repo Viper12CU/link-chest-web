@@ -121,13 +121,16 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [categories, setCategories] = useState<Category[]>(CATEGORIES_INITIAL);
   const [links, setLinks] = useState<LinkItem[]>(LINKS_INITIAL);
   const [currentView, setCurrentView] = useState<DashboardView>("links");
-  const [activeCategory, setActiveCategory] = useState<string>(readStoredActiveCategory);
+  // Estado inicial SSR-seguro: idéntico en servidor y en la primera
+  // renderización del cliente para evitar hydration mismatch. El valor
+  // persistido en localStorage se restaura en un efecto tras el montaje.
+  const [activeCategory, setActiveCategory] = useState<string>(
+    () => CATEGORIES_INITIAL[0]?.name ?? DEFAULT_CATEGORY.name
+  );
   const [activeFilter, setActiveFilter] = useState<LinkFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
-  // Init diferido: en servidor devuelve false y en cliente lee localStorage.
-  // No produce parpadeo porque el script theme-init ya aplicó la clase .dark
-  // antes del primer pintado, y la clase vive fuera del árbol React.
-  const [dark, setDark] = useState<boolean>(readStoredTheme);
+  const [dark, setDark] = useState<boolean>(false);
+  const [hydrated, setHydrated] = useState(false);
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
   const [linkModal, setLinkModal] = useState<{ open: boolean; editingId: number | null }>({
     open: false,
@@ -138,22 +141,35 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     editingId: null,
   });
 
+  // Sincroniza con localStorage (sistema externo) tras la hidratación.
+  // El render inicial es SSR-seguro; esta actualización única es intencionada.
   useEffect(() => {
+    // Restaura los valores persistidos solo en cliente, tras la hidratación.
+    /* eslint-disable react-hooks/set-state-in-effect -- hidratación SSR-segura, una sola vez */
+    setActiveCategory(readStoredActiveCategory());
+    setDark(readStoredTheme());
+    setHydrated(true);
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
     document.documentElement.classList.toggle("dark", dark);
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, dark ? "dark" : "light");
     } catch {
       // Almacenamiento no disponible: se mantiene el tema en memoria.
     }
-  }, [dark]);
+  }, [dark, hydrated]);
 
   useEffect(() => {
+    if (!hydrated) return;
     try {
       window.localStorage.setItem(ACTIVE_CATEGORY_STORAGE_KEY, activeCategory);
     } catch {
       // Almacenamiento no disponible: se mantiene la categoría en memoria.
     }
-  }, [activeCategory]);
+  }, [activeCategory, hydrated]);
 
   const toggleTheme = useCallback(() => setDark((v) => !v), []);
 

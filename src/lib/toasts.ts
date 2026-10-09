@@ -86,6 +86,28 @@ export function toastCategoryProtected(action: "editar" | "eliminar"): string {
   );
 }
 
+// --- Perfil ---
+
+export function toastProfileUpdated(): string {
+  return notifySuccess("Perfil actualizado", "Tus datos ya están guardados.");
+}
+
+export function toastPasswordUpdated(): string {
+  return notifySuccess("Contraseña actualizada", "La próxima vez entra con la nueva.");
+}
+
+export function toastAvatarUpdated(): string {
+  return notifySuccess("Foto actualizada", "Tu avatar ya se ve en toda la app.", 3000);
+}
+
+export function toastBackupExported(): string {
+  return notifySuccess("Backup exportado", "Tu colección se descargó en JSON.");
+}
+
+export function toastSessionsClosed(): string {
+  return notifySuccess("Sesiones cerradas", "Solo queda activa esta sesión.");
+}
+
 // --- Otros ---
 
 export function toastDemoDownload(): string {

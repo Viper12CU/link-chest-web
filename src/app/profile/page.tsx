@@ -1,12 +1,11 @@
-export default function ProfilePage() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 bg-zinc-50 p-8 font-sans dark:bg-black">
-      <h1 className="text-3xl font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-        Perfil
-      </h1>
-      <p className="text-base text-zinc-600 dark:text-zinc-400">
-        Información de tu cuenta de Link Chest.
-      </p>
-    </main>
-  );
+import type { Metadata } from "next";
+import { ProfilePage } from "@/components/pages/ProfilePage";
+
+export const metadata: Metadata = {
+  title: "Perfil — Link Chest",
+  description: "Edita tu perfil, actualiza tu contraseña e instala la app de Link Chest.",
+};
+
+export default function Page() {
+  return <ProfilePage />;
 }
