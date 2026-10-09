@@ -5,7 +5,6 @@ import { Sidebar } from "@/components/organisms/Sidebar";
 import { Topbar } from "@/components/organisms/Topbar";
 import { LinkModal } from "@/components/organisms/LinkModal";
 import { CategoryModal } from "@/components/organisms/CategoryModal";
-import { Toast } from "@/components/molecules/Toast";
 import { DashboardProvider, useDashboard } from "@/components/templates/DashboardProvider";
 
 function DashboardShell({ children }: { children: React.ReactNode }) {
@@ -38,7 +37,6 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       </div>
       <LinkModal />
       <CategoryModal />
-      <Toast />
     </div>
   );
 }

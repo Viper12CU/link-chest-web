@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Eyebrow } from "@/components/atoms/Eyebrow";
+import { LoginEyebrow } from "@/components/atoms/LoginEyebrow";
 
 export function LoginIntro({
   title,
@@ -10,8 +10,8 @@ export function LoginIntro({
 }) {
   return (
     <>
-      <Eyebrow>YOUR LINKS. YOUR CHEST.</Eyebrow>
-      <h1 className="mb-[14px] font-display text-[40px] font-bold leading-[1.03] tracking-[-.05em] text-text max-[620px]:text-[32px]">
+      <LoginEyebrow>YOUR LINKS. YOUR CHEST.</LoginEyebrow>
+      <h1 className="mb-[14px] font-display text-[40px] font-bold leading-[1.03] tracking-[-.05em] text-[#182019] max-[620px]:text-[32px]">
         {title ?? (
           <>
             Todo lo que guardas,
@@ -20,7 +20,7 @@ export function LoginIntro({
           </>
         )}
       </h1>
-      <p className="mt-4 mb-7 leading-[1.6] text-muted">{subtitle}</p>
+      <p className="mt-4 mb-7 leading-[1.6] text-[#7b847d]">{subtitle}</p>
     </>
   );
 }

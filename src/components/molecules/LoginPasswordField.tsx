@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import type { InputHTMLAttributes } from "react";
-import { FormField } from "@/components/molecules/FormField";
-import { TextInput } from "@/components/atoms/TextInput";
+import { LoginField } from "@/components/molecules/LoginField";
+import { LoginInput } from "@/components/atoms/LoginInput";
 import { Icon } from "@/components/atoms/Icon";
-import { IconButton } from "@/components/atoms/IconButton";
+import { LoginIconButton } from "@/components/atoms/LoginIconButton";
 
-export function PasswordField({
+// Campo de contraseña exclusivo del login: solo átomos estáticos.
+export function LoginPasswordField({
   label = "Contraseña",
   className = "",
   ...props
@@ -15,22 +16,22 @@ export function PasswordField({
   const [visible, setVisible] = useState(false);
 
   return (
-    <FormField label={label}>
+    <LoginField label={label}>
       <div className="relative">
-        <TextInput
+        <LoginInput
           {...props}
           type={visible ? "text" : "password"}
           className={`pr-[45px] ${className}`}
         />
-        <IconButton
+        <LoginIconButton
           type="button"
           aria-label={visible ? "Ocultar contraseña" : "Mostrar contraseña"}
           onClick={() => setVisible((v) => !v)}
           className="absolute right-[5px] top-[5px]"
         >
           <Icon name={visible ? "eye-off" : "eye"} />
-        </IconButton>
+        </LoginIconButton>
       </div>
-    </FormField>
+    </LoginField>
   );
 }

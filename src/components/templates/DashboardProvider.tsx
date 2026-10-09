@@ -6,10 +6,25 @@ import {
   useContext,
   useEffect,
   useMemo,
-  useRef,
   useState,
   type ReactNode,
 } from "react";
+import {
+  toastCategoryChanged,
+  toastCategoryCreated,
+  toastCategoryDeleted,
+  toastCategoryExists,
+  toastCategoryNotFound,
+  toastCategoryProtected,
+  toastCategoryUpdated,
+  toastCopyFailed,
+  toastFavoriteAdded,
+  toastFavoriteRemoved,
+  toastLinkCopied,
+  toastLinkCreated,
+  toastLinkDeleted,
+  toastLinkUpdated,
+} from "@/lib/toasts";
 import {
   CATEGORIES_INITIAL,
   DEFAULT_CATEGORY,
@@ -50,14 +65,12 @@ type DashboardContextValue = {
   openMenuId: number | null;
   linkModal: { open: boolean; editingId: number | null };
   categoryModal: { open: boolean; editingId: number | null };
-  toast: string | null;
   setCurrentView: (view: DashboardView) => void;
   setActiveCategory: (category: string) => void;
   setActiveFilter: (filter: LinkFilter) => void;
   setSearchQuery: (query: string) => void;
   setOpenMenuId: (id: number | null) => void;
   toggleTheme: () => void;
-  showToast: (message: string) => void;
   openNewLink: () => void;
   openEditLink: (id: number) => void;
   closeLinkModal: () => void;
@@ -124,8 +137,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     open: false,
     editingId: null,
   });
-  const [toast, setToast] = useState<string | null>(null);
-  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -144,18 +155,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     }
   }, [activeCategory]);
 
-  useEffect(() => {
-    return () => {
-      if (toastTimer.current) clearTimeout(toastTimer.current);
-    };
-  }, []);
-
-  const showToast = useCallback((message: string) => {
-    setToast(message);
-    if (toastTimer.current) clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(null), 2300);
-  }, []);
-
   const toggleTheme = useCallback(() => setDark((v) => !v), []);
 
   const openNewLink = useCallback(() => {
@@ -172,19 +171,16 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setLinkModal({ open: false, editingId: null });
   }, []);
 
-  const saveLink = useCallback(
-    (payload: LinkPayload, editingId: number | null) => {
-      if (editingId !== null) {
-        setLinks((prev) => prev.map((l) => (l.id === editingId ? { ...l, ...payload } : l)));
-        showToast("Enlace actualizado");
-      } else {
-        setLinks((prev) => [{ id: Date.now(), ...payload, date: "Ahora", favorite: false }, ...prev]);
-        showToast("Enlace creado");
-      }
-      setLinkModal({ open: false, editingId: null });
-    },
-    [showToast]
-  );
+  const saveLink = useCallback((payload: LinkPayload, editingId: number | null) => {
+    if (editingId !== null) {
+      setLinks((prev) => prev.map((l) => (l.id === editingId ? { ...l, ...payload } : l)));
+      toastLinkUpdated();
+    } else {
+      setLinks((prev) => [{ id: Date.now(), ...payload, date: "Ahora", favorite: false }, ...prev]);
+      toastLinkCreated();
+    }
+    setLinkModal({ open: false, editingId: null });
+  }, []);
 
   const copyLink = useCallback(
     async (id: number) => {
@@ -192,13 +188,13 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       if (!link) return;
       try {
         await navigator.clipboard.writeText(link.url);
-        showToast("Enlace copiado al portapapeles");
+        toastLinkCopied();
       } catch {
-        showToast("No se pudo copiar el enlace");
+        toastCopyFailed();
       }
       setOpenMenuId(null);
     },
-    [links, showToast]
+    [links]
   );
 
   const promptChangeCategory = useCallback(
@@ -211,31 +207,30 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         const match = categories.find((c) => c.name.toLowerCase() === selected.toLowerCase());
         if (match) {
           setLinks((prev) => prev.map((l) => (l.id === id ? { ...l, category: match.name } : l)));
-          showToast("Categoría actualizada");
+          toastCategoryChanged();
         } else {
-          showToast("Categoría no encontrada");
+          toastCategoryNotFound();
         }
       }
       setOpenMenuId(null);
     },
-    [categories, links, showToast]
+    [categories, links]
   );
 
-  const toggleFavorite = useCallback(
-    (id: number) => {
-      let next = false;
-      setLinks((prev) =>
-        prev.map((l) => {
-          if (l.id !== id) return l;
-          next = !l.favorite;
-          return { ...l, favorite: next };
-        })
-      );
-      showToast(next ? "Añadido a favoritos" : "Quitado de favoritos");
-      setOpenMenuId(null);
-    },
-    [showToast]
-  );
+  const toggleFavorite = useCallback((id: number) => {
+    let next = false;
+    setLinks((prev) =>
+      prev.map((l) => {
+        if (l.id !== id) return l;
+        next = !l.favorite;
+        return { ...l, favorite: next };
+      })
+    );
+    // `next` se calcula en el actualizador de estado (igual que antes).
+    if (next) toastFavoriteAdded();
+    else toastFavoriteRemoved();
+    setOpenMenuId(null);
+  }, []);
 
   const requestDeleteLink = useCallback(
     (id: number) => {
@@ -243,27 +238,24 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       if (!link) return;
       if (confirm(`¿Eliminar "${link.title}"?`)) {
         setLinks((prev) => prev.filter((l) => l.id !== id));
-        showToast("Enlace eliminado");
+        toastLinkDeleted();
       }
       setOpenMenuId(null);
     },
-    [links, showToast]
+    [links]
   );
 
   const openNewCategory = useCallback(() => {
     setCategoryModal({ open: true, editingId: null });
   }, []);
 
-  const openEditCategory = useCallback(
-    (id: number) => {
-      if (id === DEFAULT_CATEGORY_ID) {
-        showToast("La categoría General no se puede editar");
-        return;
-      }
-      setCategoryModal({ open: true, editingId: id });
-    },
-    [showToast]
-  );
+  const openEditCategory = useCallback((id: number) => {
+    if (id === DEFAULT_CATEGORY_ID) {
+      toastCategoryProtected("editar");
+      return;
+    }
+    setCategoryModal({ open: true, editingId: id });
+  }, []);
 
   const closeCategoryModal = useCallback(() => {
     setCategoryModal({ open: false, editingId: null });
@@ -277,7 +269,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       const emoji = payload.emoji.trim() || "📁";
       if (editingId !== null) {
         if (editingId === DEFAULT_CATEGORY_ID) {
-          showToast("La categoría General no se puede editar");
+          toastCategoryProtected("editar");
           return;
         }
         const cat = categories.find((c) => c.id === editingId);
@@ -288,24 +280,24 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         );
         setLinks((prev) => prev.map((l) => (l.category === oldName ? { ...l, category: trimmed } : l)));
         if (oldName === activeCategory) setActiveCategory(trimmed);
-        showToast("Categoría actualizada");
+        toastCategoryUpdated();
       } else {
         if (categories.some((c) => c.name.toLowerCase() === trimmed.toLowerCase())) {
-          showToast("Esa categoría ya existe");
+          toastCategoryExists();
           return;
         }
         setCategories((prev) => [...prev, { id: Date.now(), name: trimmed, color, emoji }]);
-        showToast("Categoría creada");
+        toastCategoryCreated();
       }
       setCategoryModal({ open: false, editingId: null });
     },
-    [categories, activeCategory, showToast]
+    [categories, activeCategory]
   );
 
   const requestDeleteCategory = useCallback(
     (id: number) => {
       if (id === DEFAULT_CATEGORY_ID) {
-        showToast("La categoría General no se puede eliminar");
+        toastCategoryProtected("eliminar");
         return;
       }
       const cat = categories.find((c) => c.id === id);
@@ -318,9 +310,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       if (cat.name === activeCategory) {
         setActiveCategory(remaining[0]?.name ?? DEFAULT_CATEGORY.name);
       }
-      showToast("Categoría eliminada");
+      toastCategoryDeleted();
     },
-    [categories, links, activeCategory, showToast]
+    [categories, links, activeCategory]
   );
 
   const openCategoryLinks = useCallback((name: string) => {
@@ -369,14 +361,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     openMenuId,
     linkModal,
     categoryModal,
-    toast,
     setCurrentView,
     setActiveCategory,
     setActiveFilter,
     setSearchQuery,
     setOpenMenuId,
     toggleTheme,
-    showToast,
     openNewLink,
     openEditLink,
     closeLinkModal,

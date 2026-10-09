@@ -1,13 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { FormField } from "@/components/molecules/FormField";
-import { PasswordField } from "@/components/molecules/PasswordField";
-import { RememberForgotRow } from "@/components/molecules/RememberForgotRow";
-import { AuthDivider } from "@/components/molecules/AuthDivider";
-import { GoogleLoginButton } from "@/components/molecules/GoogleLoginButton";
-import { TextInput } from "@/components/atoms/TextInput";
-import { PrimaryButton } from "@/components/atoms/PrimaryButton";
+import { LoginField } from "@/components/molecules/LoginField";
+import { LoginPasswordField } from "@/components/molecules/LoginPasswordField";
+import { LoginRememberRow } from "@/components/molecules/LoginRememberRow";
+import { LoginDivider } from "@/components/molecules/LoginDivider";
+import { LoginGoogleButton } from "@/components/molecules/LoginGoogleButton";
+import { LoginInput } from "@/components/atoms/LoginInput";
+import { LoginSubmitButton } from "@/components/atoms/LoginSubmitButton";
+import { toastGoogleRedirect, toastSessionStarted } from "@/lib/toasts";
 import type { AuthMode } from "@/components/organisms/LoginCard";
 
 export function LoginForm({
@@ -27,22 +28,23 @@ export function LoginForm({
         className={`grid gap-[17px] ${isLogin ? "animate-auth-in-left" : "animate-auth-in-right"}`}
         onSubmit={(e) => {
           e.preventDefault();
+          toastSessionStarted();
           router.push("/dashboard");
         }}
       >
         {!isLogin && (
-          <FormField label="Nombre">
-            <TextInput
+          <LoginField label="Nombre">
+            <LoginInput
               type="text"
               name="name"
               autoComplete="name"
               placeholder="Tu nombre"
               required
             />
-          </FormField>
+          </LoginField>
         )}
-        <FormField label="Correo electrónico">
-          <TextInput
+        <LoginField label="Correo electrónico">
+          <LoginInput
             type="email"
             name="email"
             autoComplete="email"
@@ -50,8 +52,8 @@ export function LoginForm({
             placeholder={isLogin ? undefined : "tu@correo.com"}
             required
           />
-        </FormField>
-        <PasswordField
+        </LoginField>
+        <LoginPasswordField
           name="password"
           autoComplete={isLogin ? "current-password" : "new-password"}
           defaultValue={isLogin ? "12345678" : undefined}
@@ -59,27 +61,30 @@ export function LoginForm({
           minLength={isLogin ? undefined : 8}
           required
         />
-        {isLogin && <RememberForgotRow />}
-        <PrimaryButton
+        {isLogin && <LoginRememberRow />}
+        <LoginSubmitButton
           type="submit"
           className="flex items-center justify-center p-[14px]!"
         >
           {isLogin ? "Iniciar sesión" : "Crear cuenta"}
-        </PrimaryButton>
+        </LoginSubmitButton>
       </form>
 
-      <AuthDivider label={isLogin ? "o continúa con" : "o regístrate con"} />
-      <GoogleLoginButton
+      <LoginDivider label={isLogin ? "o continúa con" : "o regístrate con"} />
+      <LoginGoogleButton
         label={isLogin ? "Continuar con Google" : "Registrarse con Google"}
-        onClick={() => router.push("/dashboard")}
+        onClick={() => {
+          toastGoogleRedirect();
+          router.push("/dashboard");
+        }}
       />
 
-      <p className="text-center text-[13px] text-muted">
+      <p className="text-center text-[13px] text-[#7b847d]">
         {isLogin ? "¿No tienes cuenta? " : "¿Ya tienes cuenta? "}
         <button
           type="button"
           onClick={onToggleMode}
-          className="cursor-pointer font-bold text-text underline underline-offset-2"
+          className="cursor-pointer font-bold text-[#182019] underline underline-offset-2"
         >
           {isLogin ? "Crea una" : "Inicia sesión"}
         </button>

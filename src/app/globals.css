@@ -51,6 +51,14 @@ body {
   font-family: var(--font-sans);
 }
 
+/* El login es siempre claro (el prototipo no define dark mode ahí).
+   Sus componentes dedicados (Login*) usan hex fijos, sin tokens
+   temáticos ni variante `dark:`, así el tema global no les afecta.
+   Solo se fija el color-scheme para los controles nativos. */
+.login-static {
+  color-scheme: light;
+}
+
 /* Transición login <-> registro: entrada con desliz + fundido.
    Se re-ejecuta al remontar con key={mode}. */
 @keyframes auth-in-right {
