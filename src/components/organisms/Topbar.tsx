@@ -29,7 +29,7 @@ export function Topbar({ onOpenSidebar }: TopbarProps) {
           <Icon name={dark ? "moon" : "sun"} />
         </IconButton>
         <PrimaryButton type="button" onClick={openNewLink} className="add-link-top">
-          <Icon name="plus" className="mr-1 inline-block align-[-2px] text-[14px]" />
+          <Icon name="plus" className="min-[620px]:mr-3 inline-block align-[-2px] text-[14px]" />
           <span className="max-[620px]:hidden">Nuevo enlace</span>
         </PrimaryButton>
       </div>

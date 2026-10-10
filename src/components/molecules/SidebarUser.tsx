@@ -7,6 +7,8 @@ import { IconButton } from "@/components/atoms/IconButton";
 
 export function SidebarUser() {
   const router = useRouter();
+  const name = "Demo User";
+  const initial = (name.trim().charAt(0) || "L").toUpperCase();
 
   return (
     <div className="flex items-center gap-[9px] pt-[18px]">
@@ -16,12 +18,12 @@ export function SidebarUser() {
         aria-label="Ver mi perfil"
         className="flex min-w-0 flex-1 items-center gap-[9px] rounded-[10px] transition-colors duration-200 hover:bg-surface-2"
       >
-        <div className="grid h-[33px] w-[33px] shrink-0 place-items-center rounded-full bg-[#dce7d8] text-[10px] font-extrabold text-text">
-          FL
+        <div className="grid h-[33px] w-[33px] shrink-0 place-items-center rounded-full bg-dark text-[10px] font-extrabold text-accent">
+          {initial}
         </div>
         <div className="grid flex-1">
-          <strong className="text-[11px] text-text">Fabian Lemus</strong>
-          <span className="mt-0.5 text-[9px] text-[#9ba39b]">Cuenta personal</span>
+          <strong className="text-[11px] text-text">{name}</strong>
+          <span className="mt-0.5 text-[9px] text-muted">Cuenta personal</span>
         </div>
       </Link>
       <IconButton type="button" title="Cerrar sesión" onClick={() => router.push("/login")}>

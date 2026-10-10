@@ -19,7 +19,7 @@ export function CategoriesView() {
         subtitle="Organiza tus enlaces a tu manera."
         actions={
           <PrimaryButton onClick={openNewCategory}>
-            <Icon name="plus" className="mr-1 inline-block align-[-2px] text-[13px]" />
+            <Icon name="plus" className="mr-3 inline-block align-[-2px] text-[13px]" />
             Nueva categoría
           </PrimaryButton>
         }
