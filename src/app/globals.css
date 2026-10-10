@@ -21,6 +21,8 @@
 
 .dark {
   color-scheme: dark;
+  --background: #121813;
+  --foreground: #eef3ed;
   --surface: #1b231d;
   --surface-2: #252f27;
   --text: #eef3ed;
@@ -49,6 +51,43 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+/* Scrollbar lateral global: pill flotante con acento de marca.
+   Usa tokens (--background, --line, --accent, --accent-strong) así
+   combina en claro/oscuro sin hardcodear colores. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-strong) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+  border: 2px solid var(--background);
+  border-radius: 999px;
+  min-height: 48px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-strong);
+  border-color: var(--background);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--text);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 /* El login es siempre claro (el prototipo no define dark mode ahí).
@@ -93,7 +132,91 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .animate-auth-in-right,
-  .animate-auth-in-left {
+  .animate-auth-in-left,
+  .animate-download-in,
+  .animate-modal-backdrop,
+  .animate-modal-dialog {
     animation: none;
   }
+}
+
+/* Página /download: entrada escalonada, shimmer de skeletons y barra de verificación. */
+@keyframes download-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-download-in {
+  animation: download-in 0.45s cubic-bezier(0.22, 0.8, 0.35, 1) both;
+}
+
+.download-skeleton {
+  animation: download-pulse 1.5s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    var(--surface-2) 25%,
+    var(--line) 50%,
+    var(--surface-2) 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes download-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.download-progress-track {
+  background: linear-gradient(
+    90deg,
+    var(--accent-strong) 0%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px var(--accent-strong);
+}
+
+/* Retícula de puntos de /download: usa el token de línea en ambos temas. */
+.download-dotgrid {
+  background-image: radial-gradient(var(--line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+}
+
+/* Entrada suave de modales (ModalShell): fundido del fondo + elevación del diálogo. */
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-modal-backdrop {
+  animation: modal-backdrop-in 0.22s ease-out both;
+}
+
+.animate-modal-dialog {
+  animation: modal-dialog-in 0.3s cubic-bezier(0.22, 0.8, 0.35, 1) both;
 }

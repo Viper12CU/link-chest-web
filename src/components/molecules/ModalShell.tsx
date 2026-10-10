@@ -16,12 +16,12 @@ export function ModalShell({
   children: React.ReactNode;
 }) {
   return (
-    <div className="fixed inset-0 z-[100] grid place-items-center bg-[rgba(18,26,20,.35)] p-5 backdrop-blur-[4px]">
+    <div className="animate-modal-backdrop fixed inset-0 z-[100] grid place-items-center bg-[rgba(18,26,20,.35)] p-5 backdrop-blur-[4px]">
       <div
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className={`w-full rounded-[20px] bg-surface p-[25px] text-text shadow-[0_30px_80px_rgba(10,20,12,.2)] ${
+        className={`animate-modal-dialog w-full rounded-[20px] bg-surface p-[25px] text-text shadow-[0_30px_80px_rgba(10,20,12,.2)] ${
           small ? "max-w-[400px]" : "max-w-[510px]"
         }`}
       >

@@ -110,10 +110,6 @@ export function toastSessionsClosed(): string {
 
 // --- Otros ---
 
-export function toastDemoDownload(): string {
-  return notifyInfo("Demo", "Aquí iría el enlace a Google Play / App Store.");
-}
-
 export function toastSessionStarted(): string {
   return notifySuccess("Sesión iniciada", "Bienvenido de nuevo a Link Chest.");
 }

@@ -1,7 +1,5 @@
-"use client";
-
+import Link from "next/link";
 import { Icon } from "@/components/atoms/Icon";
-import { toastDemoDownload } from "@/lib/toasts";
 
 export function DownloadPromo() {
   return (
@@ -17,14 +15,13 @@ export function DownloadPromo() {
       <p className="mb-[13px] mt-[7px] text-[11px] leading-[1.5] text-[#aab3ab]">
         Guarda enlaces estés donde estés.
       </p>
-      <button
-        type="button"
-        onClick={() => toastDemoDownload()}
+      <Link
+        href="/download"
         className="bg-transparent p-0 text-[11px] font-bold text-accent"
       >
         Descargar app{" "}
         <Icon name="external" className="inline-block align-[-2px] text-[12px]" />
-      </button>
+      </Link>
     </div>
   );
 }

@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Icon } from "@/components/atoms/Icon";
 import { IconButton } from "@/components/atoms/IconButton";
-import { AppQrCode, INSTALL_APP_URL } from "@/components/atoms/AppQrCode";
-import { toastDemoDownload } from "@/lib/toasts";
+import { AppQrCode } from "@/components/atoms/AppQrCode";
 
 const DISMISS_KEY = "link-chest:hide-install-banner";
 
@@ -24,6 +25,7 @@ export function InstallAppBanner() {
   // El valor persistido se lee tras el montaje para no romper la hidratación.
   const [dismissed, setDismissed] = useState(true);
   const [deferred, setDeferred] = useState<BeforeInstallPromptEvent | null>(null);
+  const router = useRouter();
 
   // Sincroniza con localStorage tras la hidratación (render inicial SSR-seguro).
   /* eslint-disable react-hooks/set-state-in-effect -- hidratación SSR-segura, una sola vez */
@@ -57,7 +59,7 @@ export function InstallAppBanner() {
       }
       return;
     }
-    toastDemoDownload();
+    router.push("/download");
   }
 
   function dismiss() {
@@ -103,27 +105,18 @@ export function InstallAppBanner() {
               <Icon name="download" className="text-[16px]" />
               {deferred ? "Instalar ahora" : "Descargar app"}
             </button>
-            <button
-              type="button"
-              onClick={() => toastDemoDownload()}
-              className="inline-flex cursor-pointer items-center gap-2 rounded-[11px] border border-white/20 px-4 py-[11px] text-[13.5px] font-bold text-white transition-colors duration-200 hover:bg-white/10"
-            >
-              Ver en tiendas
-              <Icon name="external" className="text-[14px]" />
-            </button>
+            
           </div>
         </div>
         <figure className="flex shrink-0 flex-col items-center gap-2 max-[620px]:hidden mr-4">
-          <a
-            href={INSTALL_APP_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Abrir página de instalación de la app"
-            title="Escanea o toca para instalar"
+          <Link
+            href="/download"
+            aria-label="Ir a la página de descarga de la app"
+            title="Escanea o toca para descargar"
             className="grid h-[118px] w-[118px] place-items-center rounded-[14px] border border-white/15 bg-white p-[10px]  transition-transform duration-200 hover:-translate-y-px"
           >
             <AppQrCode />
-          </a>
+          </Link>
           <figcaption className="text-[11px] font-semibold uppercase tracking-[.14em] text-[#aab3ab]">
             Escanéame
           </figcaption>

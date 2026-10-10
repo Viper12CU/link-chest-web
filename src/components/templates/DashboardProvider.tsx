@@ -25,6 +25,7 @@ import {
   toastLinkDeleted,
   toastLinkUpdated,
 } from "@/lib/toasts";
+import { useDensity, useViewMode } from "@/lib/view-prefs";
 import {
   CATEGORIES_INITIAL,
   DEFAULT_CATEGORY,
@@ -34,8 +35,10 @@ import {
   UNCATEGORIZED,
   type Category,
   type DashboardView,
+  type LinkDensity,
   type LinkFilter,
   type LinkItem,
+  type LinkViewMode,
 } from "@/data/dashboard";
 
 export type LinkPayload = {
@@ -60,6 +63,8 @@ type DashboardContextValue = {
   currentView: DashboardView;
   activeCategory: string;
   activeFilter: LinkFilter;
+  viewMode: LinkViewMode;
+  density: LinkDensity;
   searchQuery: string;
   dark: boolean;
   openMenuId: number | null;
@@ -68,6 +73,8 @@ type DashboardContextValue = {
   setCurrentView: (view: DashboardView) => void;
   setActiveCategory: (category: string) => void;
   setActiveFilter: (filter: LinkFilter) => void;
+  setViewMode: (mode: LinkViewMode) => void;
+  setDensity: (density: LinkDensity) => void;
   setSearchQuery: (query: string) => void;
   setOpenMenuId: (id: number | null) => void;
   toggleTheme: () => void;
@@ -128,6 +135,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     () => CATEGORIES_INITIAL[0]?.name ?? DEFAULT_CATEGORY.name
   );
   const [activeFilter, setActiveFilter] = useState<LinkFilter>("all");
+  // Vista y densidad viven en store externo (localStorage, lectura por render).
+  // Sin estado local ni write-back: imposible clobber al navegar.
+  const { viewMode, setViewMode } = useViewMode();
+  const { density, setDensity } = useDensity();
   const [searchQuery, setSearchQuery] = useState("");
   const [dark, setDark] = useState<boolean>(false);
   const [hydrated, setHydrated] = useState(false);
@@ -372,6 +383,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     currentView,
     activeCategory,
     activeFilter,
+    viewMode,
+    density,
     searchQuery,
     dark,
     openMenuId,
@@ -380,6 +393,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setCurrentView,
     setActiveCategory,
     setActiveFilter,
+    setViewMode,
+    setDensity,
     setSearchQuery,
     setOpenMenuId,
     toggleTheme,

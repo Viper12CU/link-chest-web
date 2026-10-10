@@ -1,28 +1,44 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import QRCodeStyling from "qr-code-styling";
 
-export const INSTALL_APP_URL = "https://viper12cu.github.io/Link-Chest-Release-Web/";
+export const INSTALL_APP_URL = "/download";
 
 type AppQrCodeProps = {
   data?: string;
   size?: number;
 };
 
-export function AppQrCode({ data = INSTALL_APP_URL, size = 176 }: AppQrCodeProps) {
+export function AppQrCode({ data, size = 176 }: AppQrCodeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  // SSR-seguro: el QR absoluto (origin + /download) solo se resuelve en cliente.
+  const [resolved, setResolved] = useState<string | null>(data ?? null);
+
+  /* eslint-disable react-hooks/set-state-in-effect -- hidratación SSR-segura, una sola vez */
+  useEffect(() => {
+    if (data) {
+      setResolved(data);
+      return;
+    }
+    try {
+      setResolved(`${window.location.origin}${INSTALL_APP_URL}`);
+    } catch {
+      setResolved(INSTALL_APP_URL);
+    }
+  }, [data]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     const host = containerRef.current;
-    if (!host) return;
+    if (!host || !resolved) return;
     host.innerHTML = "";
 
     const qr = new QRCodeStyling({
       width: size,
       height: size,
       type: "svg",
-      data,
+      data: resolved,
       margin: 0,
       qrOptions: { errorCorrectionLevel: "M" },
       backgroundOptions: { color: "#ffffff" },
@@ -36,13 +52,13 @@ export function AppQrCode({ data = INSTALL_APP_URL, size = 176 }: AppQrCodeProps
     return () => {
       host.innerHTML = "";
     };
-  }, [data, size]);
+  }, [resolved, size]);
 
   return (
     <div
       ref={containerRef}
       role="img"
-      aria-label={`Código QR para instalar la app: ${data}`}
+      aria-label={`Código QR para instalar la app: ${resolved ?? INSTALL_APP_URL}`}
       className="grid h-full w-full place-items-center overflow-hidden [&>svg]:h-full [&>svg]:w-full"
     />
   );

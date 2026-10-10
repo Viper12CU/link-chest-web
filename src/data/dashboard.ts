@@ -19,6 +19,10 @@ export type DashboardView = "links" | "stats" | "categories";
 
 export type LinkFilter = "all" | "recent" | "favorites";
 
+export type LinkViewMode = "grid" | "list";
+
+export type LinkDensity = "comfortable" | "compact";
+
 export const DEFAULT_CATEGORY: Category = { id: 0, name: "General", color: "#8a948a", emoji: "📁" };
 
 export const DEFAULT_CATEGORY_ID = 0;
