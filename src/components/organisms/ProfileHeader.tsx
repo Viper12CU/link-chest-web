@@ -3,7 +3,7 @@ import { AvatarUploader } from "@/components/molecules/AvatarUploader";
 
 const STATS = [
   { value: "248", label: "Enlaces" },
-  { value: "12", label: "Categorías" },
+  { value: "12", label: "Cofres" },
 ];
 
 export function ProfileHeader({ name, email }: { name: string; email: string }) {

@@ -30,7 +30,7 @@ function CategoryModalForm({
   return (
     <ModalShell
       eyebrow="ORGANIZACIÓN"
-      title={editing ? "Editar categoría" : "Nueva categoría"}
+      title={editing ? "Editar cofre" : "Nuevo cofre"}
       onClose={onClose}
       small
     >
@@ -47,7 +47,7 @@ function CategoryModalForm({
         <FormField label="Color">
           <div className="flex items-center gap-3">
             <ColorInput
-              aria-label="Color de la categoría"
+              aria-label="Color del cofre"
               value={color}
               onChange={(e) => setColor(e.target.value)}
             />

@@ -178,7 +178,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     try {
       window.localStorage.setItem(ACTIVE_CATEGORY_STORAGE_KEY, activeCategory);
     } catch {
-      // Almacenamiento no disponible: se mantiene la categoría en memoria.
+      // Almacenamiento no disponible: se mantiene el cofre en memoria.
     }
   }, [activeCategory, hydrated]);
 
@@ -229,7 +229,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       const link = links.find((l) => l.id === id);
       if (!link) return;
       const names = categories.map((c) => c.name).join(", ");
-      const selected = prompt(`Nueva categoría para "${link.title}"\n\nDisponibles: ${names}`, link.category);
+      const selected = prompt(`Nuevo cofre para "${link.title}"\n\nDisponibles: ${names}`, link.category);
       if (selected) {
         const match = categories.find((c) => c.name.toLowerCase() === selected.toLowerCase());
         if (match) {

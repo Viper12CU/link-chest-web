@@ -1,7 +1,7 @@
 import type { ReactNode, SVGProps } from "react";
 
 // Fuente única de iconos UI: colección Reicon (MIT) vía MCP icons0.
-// Ver AGENTS.md § "Iconos". Los emojis de categorías NO usan este componente.
+// Ver AGENTS.md § "Iconos". Los emojis de cofres NO usan este componente.
 // "more" es un fallback local estilo Reicon (tres puntos): la colección no trae ellipsis.
 
 export type IconName =

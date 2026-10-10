@@ -15,12 +15,12 @@ export function CategoriesView() {
     <section className="mx-auto max-w-[1500px] px-[34px] pb-[60px] pt-[35px] max-[820px]:px-[18px] max-[820px]:pb-[45px] max-[820px]:pt-7">
       <SectionHeading
         eyebrow="ORGANIZACIÓN"
-        title="Categorías"
+        title="Cofres"
         subtitle="Organiza tus enlaces a tu manera."
         actions={
           <PrimaryButton onClick={openNewCategory}>
             <Icon name="plus" className="mr-3 inline-block align-[-2px] text-[13px]" />
-            Nueva categoría
+            Nuevo cofre
           </PrimaryButton>
         }
       />

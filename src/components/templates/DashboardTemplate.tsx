@@ -19,7 +19,10 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
       }
       if (e.key === "Escape") closeAllOverlays();
     };
-    const onClick = () => setOpenMenuId(null);
+    const onClick = (e: MouseEvent) => {
+      if ((e.target as HTMLElement).closest?.("[data-link-menu]")) return;
+      setOpenMenuId(null);
+    };
     document.addEventListener("keydown", onKeyDown);
     document.addEventListener("click", onClick);
     return () => {

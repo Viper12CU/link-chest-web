@@ -19,7 +19,7 @@ type SidebarProps = {
 const NAV: { view: DashboardView; icon: IconName; label: string }[] = [
   { view: "links", icon: "grid", label: "Mis enlaces" },
   { view: "stats", icon: "chart", label: "Estadísticas" },
-  { view: "categories", icon: "category", label: "Categorías" },
+  { view: "categories", icon: "category", label: "Cofres" },
 ];
 
 export function Sidebar({ open, onClose }: SidebarProps) {
@@ -62,8 +62,8 @@ export function Sidebar({ open, onClose }: SidebarProps) {
 
       <div className="mt-7">
         <div className="flex items-center justify-between">
-          <NavLabel>Categorías</NavLabel>
-          <IconButton type="button" aria-label="Añadir categoría" onClick={openNewCategory} className="text-[#8a948a]">
+          <NavLabel>Cofres</NavLabel>
+          <IconButton type="button" aria-label="Añadir cofre" onClick={openNewCategory} className="text-[#8a948a]">
             <Icon name="plus" />
           </IconButton>
         </div>

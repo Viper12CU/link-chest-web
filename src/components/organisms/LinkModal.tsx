@@ -55,7 +55,7 @@ function LinkModalForm({
         <FormField label="URL">
           <TextInput required type="url" placeholder="https://..." value={url} onChange={(e) => setUrl(e.target.value)} />
         </FormField>
-        <FormField label="Categoría">
+        <FormField label="Cofre">
           <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputClass}>
             {categories.map((c) => (
               <option key={c.id} value={c.name}>

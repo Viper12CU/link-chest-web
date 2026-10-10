@@ -41,7 +41,7 @@ export function LinksView() {
             <Icon name="search" />
           </div>
           <h3 className="mb-[5px] font-display text-text">No encontramos enlaces</h3>
-          <p>Prueba con otro término de búsqueda o categoría.</p>
+          <p>Prueba con otro término de búsqueda u otro cofre.</p>
         </div>
       )}
     </section>

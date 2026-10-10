@@ -9,10 +9,12 @@ export function LinkCardMenu({ linkId, favorite }: { linkId: number; favorite: b
   const open = openMenuId === linkId;
 
   return (
-    <div className="relative">
+    <div className="relative" data-link-menu onClick={(e) => e.stopPropagation()}>
       <button
         type="button"
         aria-label="Opciones"
+        aria-haspopup="menu"
+        aria-expanded={open}
         onClick={(e) => {
           e.stopPropagation();
           setOpenMenuId(open ? null : linkId);
@@ -45,7 +47,7 @@ export function LinkCardMenu({ linkId, favorite }: { linkId: number; favorite: b
             className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text"
           >
             <Icon name="category" className="mr-2 inline-block align-[-2px] text-[13px]" />
-            Cambiar categoría
+            Cambiar de cofre
           </button>
           <button
             type="button"
@@ -53,7 +55,7 @@ export function LinkCardMenu({ linkId, favorite }: { linkId: number; favorite: b
             className="block w-full rounded-[7px] bg-transparent px-[9px] py-2 text-left text-[11px] text-[#5e685f] hover:bg-surface-2 hover:text-text"
           >
             <Icon
-              name={favorite ? "star" : "star-filled"}
+              name={favorite ? "star-filled" : "star"}
               className="mr-2 inline-block align-[-2px] text-[13px]"
             />
             {favorite ? "Quitar favorito" : "Añadir favorito"}

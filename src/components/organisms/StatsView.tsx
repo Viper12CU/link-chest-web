@@ -29,7 +29,7 @@ export function StatsView() {
       <div className="mb-[18px] grid grid-cols-4 gap-[14px] max-[1100px]:grid-cols-2 max-[400px]:grid-cols-1">
         <StatCard icon="grid" value={links.length} label="Enlaces guardados" />
         <StatCard icon="heart" value={favorites} label="Favoritos" />
-        <StatCard icon="category" value={categories.length} label="Categorías" />
+        <StatCard icon="category" value={categories.length} label="Cofres" />
         <StatCard icon="trend" value={87} label="Aperturas este mes" trend="+18%" />
       </div>
       <div className="grid grid-cols-[1.5fr_1fr] gap-[18px] max-[820px]:grid-cols-1">
@@ -64,7 +64,7 @@ export function StatsView() {
         <div className="rounded-[18px] border border-line bg-surface p-[21px]">
           <div className="mb-6 flex items-start justify-between">
             <div>
-              <strong className="font-display text-[15px] text-text">Por categoría</strong>
+              <strong className="font-display text-[15px] text-text">Por cofre</strong>
               <p className="mt-1 text-[11px] text-muted">Distribución de tus enlaces</p>
             </div>
           </div>

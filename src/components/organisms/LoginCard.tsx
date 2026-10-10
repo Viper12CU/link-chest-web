@@ -1,15 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LoginBrandLogo } from "@/components/molecules/LoginBrandLogo";
 import { LoginIntro } from "@/components/molecules/LoginIntro";
 import { LoginForm } from "@/components/organisms/LoginForm";
+import type { LoginInitialMode } from "@/components/pages/LoginPage";
 
 export type AuthMode = "login" | "register";
 
-export function LoginCard() {
+export function LoginCard({ initialMode = "signin" }: { initialMode?: LoginInitialMode }) {
   const [mode, setMode] = useState<AuthMode>("login");
   const isLogin = mode === "login";
+
+  useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect -- hidratación SSR-segura, una sola vez */
+    setMode(initialMode === "signup" ? "register" : "login");
+    /* eslint-enable react-hooks/set-state-in-effect */
+  }, [initialMode]);
 
   return (
     <div className="relative z-[2] w-full max-w-[440px] rounded-[28px] border border-[rgba(255,255,255,.8)] bg-[rgba(255,255,255,.92)] p-[42px] shadow-[0_18px_50px_rgba(25,35,27,.08)] max-[620px]:px-[22px] max-[620px]:py-[28px]">
@@ -41,11 +48,6 @@ export function LoginCard() {
         mode={mode}
         onToggleMode={() => setMode(isLogin ? "register" : "login")}
       />
-      <p className="mt-[18px] text-center text-[11px] text-[#a0a8a0]">
-        {isLogin
-          ? "Demo: cualquier correo y contraseña funcionan."
-          : "Demo: completa cualquier dato para entrar."}
-      </p>
     </div>
   );
 }

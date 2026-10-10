@@ -66,7 +66,7 @@ export function DangerZone() {
       {confirmOpen ? (
         <ModalShell eyebrow="Eliminar cuenta" title="¿Seguro que quieres irte?" onClose={() => setConfirmOpen(false)} small>
           <p className="text-[13.5px] leading-[1.6] text-muted">
-            Se borrarán tus enlaces y categorías de demostración. Escribe <strong className="text-text">ELIMINAR</strong>{" "}
+            Se borrarán tus enlaces y cofres de demostración. Escribe <strong className="text-text">ELIMINAR</strong>{" "}
             para confirmar.
           </p>
           <input

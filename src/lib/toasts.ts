@@ -46,11 +46,11 @@ export function toastCopyFailed(): string {
 }
 
 export function toastCategoryChanged(): string {
-  return notifySuccess("Categoría actualizada", "El enlace ya está en su nueva categoría.");
+  return notifySuccess("Cofre actualizado", "El enlace ya está en su nuevo cofre.");
 }
 
 export function toastCategoryNotFound(): string {
-  return notifyError("Categoría no encontrada", "Revisa el nombre e inténtalo de nuevo.");
+  return notifyError("Cofre no encontrado", "Revisa el nombre e inténtalo de nuevo.");
 }
 
 export function toastFavoriteAdded(): string {
@@ -61,28 +61,28 @@ export function toastFavoriteRemoved(): string {
   return notifyInfo("Quitado de favoritos", undefined, 3000);
 }
 
-// --- Categorías ---
+// --- Cofres ---
 
 export function toastCategoryCreated(): string {
-  return notifySuccess("Categoría creada", "Ya puedes guardar enlaces en ella.");
+  return notifySuccess("Cofre creado", "Ya puedes guardar enlaces en él.");
 }
 
 export function toastCategoryUpdated(): string {
-  return notifySuccess("Categoría actualizada", "Los cambios ya están guardados.");
+  return notifySuccess("Cofre actualizado", "Los cambios ya están guardados.");
 }
 
 export function toastCategoryDeleted(): string {
-  return notifySuccess("Categoría eliminada", "Sus enlaces se movieron a Sin categoría.");
+  return notifySuccess("Cofre eliminado", "Sus enlaces se movieron al cofre General.");
 }
 
 export function toastCategoryExists(): string {
-  return notifyWarning("Esa categoría ya existe", "Elige otro nombre para crearla.");
+  return notifyWarning("Ese cofre ya existe", "Elige otro nombre para crearlo.");
 }
 
 export function toastCategoryProtected(action: "editar" | "eliminar"): string {
   return notifyWarning(
-    "Categoría protegida",
-    `La categoría General no se puede ${action}.`
+    "Cofre protegido",
+    `El cofre General no se puede ${action}.`
   );
 }
 
