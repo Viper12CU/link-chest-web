@@ -1,26 +1,223 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  color-scheme: light;
   --background: #ffffff;
   --foreground: #171717;
+  --surface: #ffffff;
+  --surface-2: #edf1e9;
+  --text: #182019;
+  --muted: #7b847d;
+  --line: #e3e8e1;
+  --accent: #b9ef72;
+  --accent-strong: #8ddc38;
+  --dark: #172019;
+  --danger: #d9534f;
+  --shadow: 0 18px 50px rgba(25, 35, 27, 0.08);
+  --radius: 18px;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #121813;
+  --foreground: #eef3ed;
+  --surface: #1b231d;
+  --surface-2: #252f27;
+  --text: #eef3ed;
+  --muted: #9aa69c;
+  --line: #2d3830;
+  --dark: #0c110e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-space-grotesk);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-dark: var(--dark);
+  --color-danger: var(--danger);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Scrollbar lateral global: pill flotante con acento de marca.
+   Usa tokens (--background, --line, --accent, --accent-strong) así
+   combina en claro/oscuro sin hardcodear colores. */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-strong) transparent;
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-strong) 100%);
+  border: 2px solid var(--background);
+  border-radius: 999px;
+  min-height: 48px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-strong);
+  border-color: var(--background);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: var(--text);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* El login es siempre claro (el prototipo no define dark mode ahí).
+   Sus componentes dedicados (Login*) usan hex fijos, sin tokens
+   temáticos ni variante `dark:`, así el tema global no les afecta.
+   Solo se fija el color-scheme para los controles nativos. */
+.login-static {
+  color-scheme: light;
+}
+
+/* Transición login <-> registro: entrada con desliz + fundido.
+   Se re-ejecuta al remontar con key={mode}. */
+@keyframes auth-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes auth-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-auth-in-right {
+  animation: auth-in-right 0.32s cubic-bezier(0.22, 0.8, 0.35, 1) both;
+}
+
+.animate-auth-in-left {
+  animation: auth-in-left 0.32s cubic-bezier(0.22, 0.8, 0.35, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-auth-in-right,
+  .animate-auth-in-left,
+  .animate-download-in,
+  .animate-modal-backdrop,
+  .animate-modal-dialog {
+    animation: none;
+  }
+}
+
+/* Página /download: entrada escalonada, shimmer de skeletons y barra de verificación. */
+@keyframes download-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-download-in {
+  animation: download-in 0.45s cubic-bezier(0.22, 0.8, 0.35, 1) both;
+}
+
+.download-skeleton {
+  animation: download-pulse 1.5s ease-in-out infinite;
+  background: linear-gradient(
+    90deg,
+    var(--surface-2) 25%,
+    var(--line) 50%,
+    var(--surface-2) 75%
+  );
+  background-size: 200% 100%;
+}
+
+@keyframes download-pulse {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.download-progress-track {
+  background: linear-gradient(
+    90deg,
+    var(--accent-strong) 0%,
+    transparent 100%
+  );
+  box-shadow: 0 0 8px var(--accent-strong);
+}
+
+/* Retícula de puntos de /download: usa el token de línea en ambos temas. */
+.download-dotgrid {
+  background-image: radial-gradient(var(--line) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 30%, transparent 75%);
+}
+
+/* Entrada suave de modales (ModalShell): fundido del fondo + elevación del diálogo. */
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-modal-backdrop {
+  animation: modal-backdrop-in 0.22s ease-out both;
+}
+
+.animate-modal-dialog {
+  animation: modal-dialog-in 0.3s cubic-bezier(0.22, 0.8, 0.35, 1) both;
 }
